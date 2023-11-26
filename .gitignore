@@ -1,5 +1,5 @@
 build
-inputs/*-test.txt
+inputs/*-test*.txt
 src/test.ts
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,macos,linux,windows
