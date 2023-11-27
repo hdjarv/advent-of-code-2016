@@ -50,3 +50,30 @@ export const sumRange = (numbers: number[], start: number = 0, end: number = num
 
 export const sortAscending = (a: number, b: number): number => a - b;
 export const sortDescending = (a: number, b: number): number => b - a;
+
+export function caesarCipher(encrypted: string, rotations: number): string {
+  const lcAlphabet = "abcdefghijklmnopqrstuvwxyz";
+  const ucAlphabet = lcAlphabet.toUpperCase();
+  let result = "";
+  // with rotations over the number of letters in alphabet, use remainder instead
+  const shift = rotations > lcAlphabet.length ? rotations % lcAlphabet.length : rotations;
+  for (let c of [...encrypted]) {
+    let alphabet = lcAlphabet;
+    let alphabetIx = alphabet.indexOf(c);
+    if (alphabetIx === -1) {
+      alphabet = ucAlphabet; // try-with uppercase instead
+      alphabetIx = alphabet.indexOf(c);
+      if (alphabetIx === -1) {
+        result += c; // keep other characters as is
+        continue;
+      }
+    }
+    let newAlphabetIx = alphabetIx + shift;
+    if (newAlphabetIx >= alphabet.length) {
+      newAlphabetIx -= alphabet.length;
+    }
+    result += alphabet[newAlphabetIx];
+  }
+
+  return result;
+}
