@@ -1,3 +1,4 @@
+import { createHash } from "crypto";
 import { existsSync as fileExists, PathLike, readFile as _readFile } from "fs";
 import { EOL } from "os";
 import { basename, extname, join } from "path";
@@ -76,4 +77,8 @@ export function caesarCipher(encrypted: string, rotations: number): string {
   }
 
   return result;
+}
+
+export function md5(input: string): string {
+  return createHash("md5").update(input).digest("hex");
 }
