@@ -19,6 +19,20 @@ export class FrequencyTable<T> {
     return this.table.entries();
   }
 
+  /**
+   * Get entries ordered by frequency.
+   * @returns the entries as a [value, count] tuple array, the most common first, ties are split alphabetically.
+   */
+  entriesByFrequency(): [value: T, count: number][] {
+    return [...this.entries()].sort(([aValue, aCount]: [T, number], [bValue, bCount]: [T, number]) => {
+      if (aCount === bCount) {
+        return `${aValue}`.localeCompare(`${bValue}`);
+      }
+
+      return bCount - aCount;
+    });
+  }
+
   get(value: T) {
     return this.table.get(value);
   }

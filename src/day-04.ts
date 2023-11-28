@@ -21,20 +21,11 @@ function parseRoom(input: string): Room {
   throw Error(`Invalid input: ${input}`);
 }
 
-function sortFrequencyTable<T extends string>(freqTab: FrequencyTable<T>): [string, number][] {
-  return [...freqTab.entries()].sort(([aKey, aCount]: [T, number], [bKey, bCount]: [T, number]) => {
-    if (aCount === bCount) {
-      return aKey.localeCompare(bKey);
-    }
-
-    return bCount - aCount;
-  });
-}
-
 function isValidRoom(room: Room): boolean {
   const freqTab = new FrequencyTable<string>();
   freqTab.add([...room.encryptedName.replaceAll("-", "")]);
-  const checksum = sortFrequencyTable(freqTab)
+  const checksum = freqTab
+    .entriesByFrequency()
     .map((entry) => entry[0])
     .slice(0, 5);
   return checksum.join("") === room.checksum;
